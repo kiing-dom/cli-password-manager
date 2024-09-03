@@ -1,0 +1,46 @@
+[
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "getpass",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "getpass",
+        "description": "getpass",
+        "detail": "getpass",
+        "documentation": {}
+    },
+    {
+        "label": "Fernet",
+        "importPath": "cryptography.fernet",
+        "description": "cryptography.fernet",
+        "isExtraImport": true,
+        "detail": "cryptography.fernet",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "PasswordManager",
+        "kind": 6,
+        "importPath": "password_manager",
+        "description": "password_manager",
+        "peekOfCode": "class PasswordManager:\n    def _init_(self, master_password):\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n        self.passwords = {}",
+        "detail": "password_manager",
+        "documentation": {}
+    }
+]
