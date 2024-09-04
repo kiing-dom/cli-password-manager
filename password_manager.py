@@ -32,3 +32,22 @@ class PasswordManager:
     def load_from_file(self, filename):
         with open(filename, 'r') as f:
             self.passowrds = json.load(f)
+            
+def main():
+    print("Welcome to the Password Manager!!!")
+    master_password = getpass.getpass("Enter the root password: ")
+    
+    pm = PasswordManager(master_password)
+    
+    while True:
+        print("\n1. Add Password")
+        print("2. Get Password")
+        print("3. List services")
+        print("4. Save passwords to file")
+        print("5. Load passwords from file")
+        print("6. Exit")
+        
+        # continue implementation tomorrow
+        
+if __name__ == "__main__":
+    main()

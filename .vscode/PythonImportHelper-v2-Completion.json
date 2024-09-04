@@ -39,7 +39,16 @@
         "kind": 6,
         "importPath": "password_manager",
         "description": "password_manager",
-        "peekOfCode": "class PasswordManager:\n    def _init_(self, master_password):\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n        self.passwords = {}",
+        "peekOfCode": "class PasswordManager:\n    def _init_(self, master_password):\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n        self.passwords = {}\n    def generate_key(self, master_password):\n        return Fernet.generate_key()\n    def add_password(self, service, password):\n        encrypted_password = self.fernet.encrypt(password.encode())\n        self.passwords[service] = encrypted_password.decode()",
+        "detail": "password_manager",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "password_manager",
+        "description": "password_manager",
+        "peekOfCode": "def main():\n    print(\"Welcome to the Password Manager!!!\")\n    master_password = getpass.getpass(\"Enter the root password: \")\n    pm = PasswordManager(master_password)\n    while True:\n        print(\"\\n1. Add Password\")\n        print(\"2. Get Password\")\n        print(\"3. List services\")\n        print(\"4. Save passwords to file\")\n        print(\"5. Load passwords from file\")",
         "detail": "password_manager",
         "documentation": {}
     }
