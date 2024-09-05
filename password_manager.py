@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class PasswordManager:
-    def _init_(self):
+    def __init__(self):
         self.salt = os.urandom(16)
         self.passwords = {}
         self.root_password_hash = None

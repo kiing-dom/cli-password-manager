@@ -82,7 +82,7 @@
         "kind": 6,
         "importPath": "password_manager",
         "description": "password_manager",
-        "peekOfCode": "class PasswordManager:\n    def _init_(self):\n        self.salt = os.urandom(16)\n        self.passwords = {}\n        self.root_password_hash = None\n    def set_root_password(self, root_password):\n        self.root_password_hash = hashlib.sha256(root_password.encode()).hexdigest()\n        self.key = self.generate_key(root_password)\n        self.fernet = Fernet(self.key)\n    def verify_root_password(self, root_password):",
+        "peekOfCode": "class PasswordManager:\n    def __init__(self):\n        self.salt = os.urandom(16)\n        self.passwords = {}\n        self.root_password_hash = None\n    def set_root_password(self, root_password):\n        self.root_password_hash = hashlib.sha256(root_password.encode()).hexdigest()\n        self.key = self.generate_key(root_password)\n        self.fernet = Fernet(self.key)\n    def verify_root_password(self, root_password):",
         "detail": "password_manager",
         "documentation": {}
     },
