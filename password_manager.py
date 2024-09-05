@@ -1,13 +1,24 @@
 import sys
 import getpass
-from cryptography.fernet import Fernet
 import json
+import os
+import base64
+import hashlib
+
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class PasswordManager:
     def _init_(self, master_password):
+        self.salt = os.random(16)
+        self.passwords = {}
+        self.master_password_hash = None
+        
+    def set_master_password(self, master_password):
+        self.master_password_hash = hashlib.sha256(master_password.encode()).hexdigest()
         self.key = self.generate_key(master_password)
         self.fernet = Fernet(self.key)
-        self.passwords = {}
         
     def generate_key(self, master_password):
         return Fernet.generate_key()

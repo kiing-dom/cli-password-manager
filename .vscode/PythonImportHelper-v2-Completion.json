@@ -18,14 +18,6 @@
         "documentation": {}
     },
     {
-        "label": "Fernet",
-        "importPath": "cryptography.fernet",
-        "description": "cryptography.fernet",
-        "isExtraImport": true,
-        "detail": "cryptography.fernet",
-        "documentation": {}
-    },
-    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -35,11 +27,62 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
+        "label": "hashlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
+        "documentation": {}
+    },
+    {
+        "label": "Fernet",
+        "importPath": "cryptography.fernet",
+        "description": "cryptography.fernet",
+        "isExtraImport": true,
+        "detail": "cryptography.fernet",
+        "documentation": {}
+    },
+    {
+        "label": "hashes",
+        "importPath": "cryptography.hazmat.primitives",
+        "description": "cryptography.hazmat.primitives",
+        "isExtraImport": true,
+        "detail": "cryptography.hazmat.primitives",
+        "documentation": {}
+    },
+    {
+        "label": "PBKDF2HMAC",
+        "importPath": "cryptography.hazmat.primitives.kdf.pbkdf2",
+        "description": "cryptography.hazmat.primitives.kdf.pbkdf2",
+        "isExtraImport": true,
+        "detail": "cryptography.hazmat.primitives.kdf.pbkdf2",
+        "documentation": {}
+    },
+    {
         "label": "PasswordManager",
         "kind": 6,
         "importPath": "password_manager",
         "description": "password_manager",
-        "peekOfCode": "class PasswordManager:\n    def _init_(self, master_password):\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n        self.passwords = {}",
+        "peekOfCode": "class PasswordManager:\n    def _init_(self, master_password):\n        self.salt = os.random(16)\n        self.passwords = {}\n        self.master_password_hash = None\n    def set_master_password(self, master_password):\n        self.master_password_hash = hashlib.sha256(master_password.encode()).hexdigest()\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n    def generate_key(self, master_password):",
         "detail": "password_manager",
         "documentation": {}
     }
