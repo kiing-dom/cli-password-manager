@@ -20,7 +20,7 @@ class PasswordManager:
         self.key = self.generate_key(master_password)
         self.fernet = Fernet(self.key)
         
-    def verify_master(self, master_password):
+    def verify_master_password(self, master_password):
         return hashlib.sha256(master_password.encode()).hexdigest() == self.master_password_hash
     
     def generate_key(self, master_password):
@@ -61,3 +61,30 @@ class PasswordManager:
         self.salt = base64.b64decode(data['salt'])
         self.master_password_hash = data['master_password_hash']
         self.passwords = data['passwords']
+        
+def main():
+    print("Welcome to the password Manager!!")
+    
+    pm = PasswordManager()
+    
+    if os.path.exists('passwords.json'):
+        pm.load_from_file('passwords.json')
+        while True:
+            master_password = getpass.getpass("Enter your root password: ")
+            if(pm.verify_master_password(master_password)):
+                pm.set_master_password(master_password)
+                break
+            else:
+                print("Root password Incorrect. Try again.")
+                
+    else:
+        while True:
+            master_password = getpass.getpass("Set a new root password: ")
+            confirm_password = getpass.getpass("Confirm root password: ")
+            if master_password == confirm_password:
+                pm.set_master_password(master_password)
+                break
+            else:
+                print("Passwords do not match. Try again")
+                
+    
