@@ -67,8 +67,8 @@ class PasswordManager:
         self.passwords = data['passwords']
         
 def main():
-    # Adding a cool ASCII title
-    ascii_banner = pyfiglet.figlet_format("Password Manager")
+    # ASCII TITLE CARD
+    ascii_banner = pyfiglet.figlet_format("Auth the Grid")
     print(colored(ascii_banner, 'cyan'))
     print(colored("Created by kiing-dom", 'yellow'))
 
