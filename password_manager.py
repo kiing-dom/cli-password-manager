@@ -11,26 +11,26 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class PasswordManager:
     def _init_(self):
-        self.salt = os.random(16)
+        self.salt = os.urandom(16)
         self.passwords = {}
-        self.master_password_hash = None
+        self.root_password_hash = None
         
-    def set_master_password(self, master_password):
-        self.master_password_hash = hashlib.sha256(master_password.encode()).hexdigest()
-        self.key = self.generate_key(master_password)
+    def set_root_password(self, root_password):
+        self.root_password_hash = hashlib.sha256(root_password.encode()).hexdigest()
+        self.key = self.generate_key(root_password)
         self.fernet = Fernet(self.key)
         
-    def verify_master_password(self, master_password):
-        return hashlib.sha256(master_password.encode()).hexdigest() == self.master_password_hash
+    def verify_root_password(self, root_password):
+        return hashlib.sha256(root_password.encode()).hexdigest() == self.root_password_hash
     
-    def generate_key(self, master_password):
+    def generate_key(self, root_password):
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
             salt=self.salt,
             iterations=100000,
         )
-        key = base64.urlsafe_b64decode(kdf.derive(master_password.encode()))
+        key = base64.urlsafe_b64encode(kdf.derive(root_password.encode()))
         return key
         
     def add_password(self, service, password):
@@ -49,8 +49,8 @@ class PasswordManager:
     def save_data_to_file(self, filename):
         data = {
             'salt': base64.b64encode(self.salt).decode(),
-            'master_password_hash': self.master_password_hash,
-            'passwords': self.passowrds
+            'root_password_hash': self.root_password_hash,
+            'passwords': self.passwords
         }
         with open(filename, 'w') as f:
             json.dump(data, f)
@@ -59,7 +59,7 @@ class PasswordManager:
         with open(filename, 'r') as f:
             data = json.load(f)
         self.salt = base64.b64decode(data['salt'])
-        self.master_password_hash = data['master_password_hash']
+        self.root_password_hash = data['root_password_hash']
         self.passwords = data['passwords']
         
 def main():
@@ -70,19 +70,19 @@ def main():
     if os.path.exists('passwords.json'):
         pm.load_from_file('passwords.json')
         while True:
-            master_password = getpass.getpass("Enter your root password: ")
-            if(pm.verify_master_password(master_password)):
-                pm.set_master_password(master_password)
+            root_password = getpass.getpass("Enter your root password: ")
+            if(pm.verify_root_password(root_password)):
+                pm.set_root_password(root_password)
                 break
             else:
                 print("Root password Incorrect. Try again.")
                 
     else:
         while True:
-            master_password = getpass.getpass("Set a new root password: ")
+            root_password = getpass.getpass("Set a new root password: ")
             confirm_password = getpass.getpass("Confirm root password: ")
-            if master_password == confirm_password:
-                pm.set_master_password(master_password)
+            if root_password == confirm_password:
+                pm.set_root_password(root_password)
                 break
             else:
                 print("Passwords do not match. Try again")
@@ -117,7 +117,7 @@ def main():
                 print(f"- {service}")
         
         elif choice == '4':
-            pm.save_to_file('passwords.json')
+            pm.save_data_to_file('passwords.json')
             print("Passwords saved successfully!")
         
         elif choice == '5':

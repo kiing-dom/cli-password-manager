@@ -82,7 +82,7 @@
         "kind": 6,
         "importPath": "password_manager",
         "description": "password_manager",
-        "peekOfCode": "class PasswordManager:\n    def _init_(self):\n        self.salt = os.random(16)\n        self.passwords = {}\n        self.master_password_hash = None\n    def set_master_password(self, master_password):\n        self.master_password_hash = hashlib.sha256(master_password.encode()).hexdigest()\n        self.key = self.generate_key(master_password)\n        self.fernet = Fernet(self.key)\n    def verify_master_password(self, master_password):",
+        "peekOfCode": "class PasswordManager:\n    def _init_(self):\n        self.salt = os.urandom(16)\n        self.passwords = {}\n        self.root_password_hash = None\n    def set_root_password(self, root_password):\n        self.root_password_hash = hashlib.sha256(root_password.encode()).hexdigest()\n        self.key = self.generate_key(root_password)\n        self.fernet = Fernet(self.key)\n    def verify_root_password(self, root_password):",
         "detail": "password_manager",
         "documentation": {}
     },
@@ -91,7 +91,7 @@
         "kind": 2,
         "importPath": "password_manager",
         "description": "password_manager",
-        "peekOfCode": "def main():\n    print(\"Welcome to the password Manager!!\")\n    pm = PasswordManager()\n    if os.path.exists('passwords.json'):\n        pm.load_from_file('passwords.json')\n        while True:\n            master_password = getpass.getpass(\"Enter your root password: \")\n            if(pm.verify_master_password(master_password)):\n                pm.set_master_password(master_password)\n                break",
+        "peekOfCode": "def main():\n    print(\"Welcome to the password Manager!!\")\n    pm = PasswordManager()\n    if os.path.exists('passwords.json'):\n        pm.load_from_file('passwords.json')\n        while True:\n            root_password = getpass.getpass(\"Enter your root password: \")\n            if(pm.verify_root_password(root_password)):\n                pm.set_root_password(root_password)\n                break",
         "detail": "password_manager",
         "documentation": {}
     }
