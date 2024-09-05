@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class PasswordManager:
-    def _init_(self, master_password):
+    def _init_(self):
         self.salt = os.random(16)
         self.passwords = {}
         self.master_password_hash = None
@@ -20,9 +20,19 @@ class PasswordManager:
         self.key = self.generate_key(master_password)
         self.fernet = Fernet(self.key)
         
-    def generate_key(self, master_password):
-        return Fernet.generate_key()
+    def verify_master(self, master_password):
+        return hashlib.sha256(master_password.encode()).hexdigest() == self.master_password_hash
     
+    def generate_key(self, master_password):
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=self.salt,
+            iterations=100000,
+        )
+        key = base64.urlsafe_b64decode(kdf.derive(master_password.encode()))
+        return key
+        
     def add_password(self, service, password):
         encrypted_password = self.fernet.encrypt(password.encode())
         self.passwords[service] = encrypted_password.decode()
@@ -36,10 +46,18 @@ class PasswordManager:
     def list_services(self):
         return list(self.passwords.keys())
     
-    def save_to_file(self, filename):
+    def save_data_to_file(self, filename):
+        data = {
+            'salt': base64.b64encode(self.salt).decode(),
+            'master_password_hash': self.master_password_hash,
+            'passwords': self.passowrds
+        }
         with open(filename, 'w') as f:
-            json.dump(self.passwords, f)
+            json.dump(data, f)
             
     def load_from_file(self, filename):
         with open(filename, 'r') as f:
-            self.passowrds = json.load(f)
+            data = json.load(f)
+        self.salt = base64.b64decode(data['salt'])
+        self.master_password_hash = data['master_password_hash']
+        self.passwords = data['passwords']
