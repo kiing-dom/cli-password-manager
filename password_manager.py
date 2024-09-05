@@ -83,6 +83,8 @@ def main():
             confirm_password = getpass.getpass("Confirm root password: ")
             if root_password == confirm_password:
                 pm.set_root_password(root_password)
+                pm.save_data_to_file('passwords.json')
+                print("Root password set and saved successfully!")
                 break
             else:
                 print("Passwords do not match. Try again")
