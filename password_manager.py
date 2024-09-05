@@ -1,5 +1,6 @@
 import sys
 import getpass
+import webbrowser
 import json
 import os
 import base64
@@ -9,6 +10,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from termcolor import colored
 import pyfiglet
+
+GITHUB_REPO_URL = 'https://github.com/kiing-dom/cli-password-manager'
 
 class PasswordManager:
     def __init__(self):
@@ -67,6 +70,7 @@ def main():
     # Adding a cool ASCII title
     ascii_banner = pyfiglet.figlet_format("Password Manager")
     print(colored(ascii_banner, 'cyan'))
+    print(colored("Created by kiing-dom", 'yellow'))
 
     pm = PasswordManager()
     
@@ -98,7 +102,8 @@ def main():
         print(colored("2. Get password", 'cyan'))
         print(colored("3. List services", 'cyan'))
         print(colored("4. Save passwords", 'cyan'))
-        print(colored("5. Exit", 'cyan'))
+        print(colored("5. Star the GitHub repo", 'light_magenta'))
+        print(colored("6. Exit", 'cyan'))
         
         choice = input(colored("Enter your choice (1-5): ", 'yellow'))
         
@@ -125,8 +130,12 @@ def main():
         elif choice == '4':
             pm.save_data_to_file('passwords.json')
             print(colored("Passwords saved successfully!", 'green'))
-        
+            
         elif choice == '5':
+            print(colored("Opening GitHub repo in browser...", 'cyan'))
+            webbrowser.open(GITHUB_REPO_URL)  # Opens the GitHub repo
+        
+        elif choice == '6':
             print(colored("Thank you for using the Password Manager. Goodbye!", 'magenta'))
             sys.exit(0)
         
