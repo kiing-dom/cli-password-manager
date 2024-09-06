@@ -136,7 +136,7 @@ def main():
             webbrowser.open(GITHUB_REPO_URL)  # Opens the GitHub repo
         
         elif choice == '6':
-            print(colored("Thank you for using the Password Manager. Goodbye!", 'magenta'))
+            print(colored("Thank you for staying Auth the Grid. Goodbye!", 'red'))
             sys.exit(0)
         
         else:
