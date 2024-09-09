@@ -66,9 +66,9 @@ def main():
             display_message("Passwords saved successfully!", 'green')
             
         elif choice == '5':
-            service = input(colored("Enter name of service with password to be edited", 'yellow'))
+            service = input(colored("Enter name of service with password to be edited: ", 'yellow'))
             if service in pm.list_services():
-                new_password = getpass.getpass(colored("Enter the new password", 'yellow'))
+                new_password = getpass.getpass(colored("Enter the new password: ", 'yellow'))
                 if pm.edit_password(service, new_password):
                     display_message(f"Password for {service} updated successfully!", 'green')
                 else:
@@ -76,7 +76,18 @@ def main():
             else:
                 display_message(f"Service could not be found", 'red')
                 
-        
+        elif choice == '6':
+            service = input(colored("Enter name of service to be deleted: ", 'yellow'))
+            if service in pm.list_services():
+                confirm = input(colored(f"Are you sure you want to delete the password for {service}? (y/n): ", 'yellow')).lower()
+                if confirm == 'y':
+                    if(pm.delete_password(service)):
+                        display_message(f"Password for {service} deleted successfully!", 'green')
+                        save_data_to_file(pm, 'passwords.json')
+                    else:
+                        display_message(f"Password for {service} could not be deleted", 'red')
+                else: display_message("Deletion cancelled.", 'yellow')
+            else: display_message(f"Service {service} does not exist.", 'red')
             
         elif choice == '7':
             display_message("Opening GitHub repo in browser...", 'cyan')
