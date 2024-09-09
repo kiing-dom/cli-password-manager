@@ -39,5 +39,20 @@ class PasswordManager:
             return self.fernet.decrypt(encrypted_password.encode()).decode()
         return None
     
+    # edit password
+    def edit_password(self, service, new_password):
+        if service in self.passwords:
+            encrypted_password = self.fernet.encrypt(new_password.encode())
+            self.passwords[service] = encrypted_password.decode();
+            return True
+        return False
+    
+    # delete function
+    def delete_password(self, service):
+        if service in self.passwords:
+            del self.passwords[service]
+            return True
+        return False
+    
     def list_services(self):
         return list(self.passwords.keys())

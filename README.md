@@ -6,13 +6,16 @@ Auth The Grid is a command-line interface (CLI) password manager that allows you
 
 - **Secure Storage**: Passwords are encrypted using the Fernet symmetric encryption.
 - **Root Password Protection**: Access to the password manager is protected by a root password.
-- **Service Management**: Add, retrieve, and list passwords for different services.
+- **Service Management**: Add, Edit, Delete, Retrieve, and List passwords for different services.
 - **Data Persistence**: Save and load passwords from a JSON file.
-- **GitHub Integration**: Easily star the GitHub repository from the CLI.
 
 ## Files
 
-- `password_manager.py` - Main file with the CLI interface.
+- `main.py` - The project entry point that ties everything together.
+- `password_manager.py` - Contains the core password management logic.
+- `file_operations.py` - Handles saving and loading passwords.
+- `ui.py` - Manages the user interface and cli interactions
+  
 
 ## Installation
 
@@ -31,7 +34,7 @@ Auth The Grid is a command-line interface (CLI) password manager that allows you
 
 Run the password manager:
 ```sh
-python password_manager.py
+python main.py
 ```
 
 ## Commands
@@ -39,8 +42,10 @@ python password_manager.py
 2. Get password: Retrieve the password for a service.
 3. List services: List all services with stored passwords.
 4. Save passwords: Save the current passwords to a file.
-5. Star the GitHub repo: Open the GitHub repository in your browser.
-6. Exit: Exit the password manager.
+5. Edit password
+6. Delete Password
+7. Star the GitHub repo: Open the GitHub repository in your browser.
+8. Exit: Exit the password manager.
 
 ## Example
 ```sh
