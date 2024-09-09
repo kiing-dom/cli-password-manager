@@ -66,10 +66,23 @@ def main():
             display_message("Passwords saved successfully!", 'green')
             
         elif choice == '5':
+            service = input(colored("Enter name of service with password to be edited", 'yellow'))
+            if service in pm.list_services():
+                new_password = getpass.getpass(colored("Enter the new password", 'yellow'))
+                if pm.edit_password(service, new_password):
+                    display_message(f"Password for {service} updated successfully!", 'green')
+                else:
+                    display_message(f"Password could not be updated!", 'red')
+            else:
+                display_message(f"Service could not be found", 'red')
+                
+        
+            
+        elif choice == '7':
             display_message("Opening GitHub repo in browser...", 'cyan')
             webbrowser.open(GITHUB_REPO_URL)
         
-        elif choice == '6':
+        elif choice == '8':
             display_message("Thank you for staying Auth the Grid. Goodbye!", 'red')
             sys.exit(0)
         

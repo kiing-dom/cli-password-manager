@@ -18,11 +18,13 @@ def display_menu():
     print(colored("2. Get password", 'cyan'))
     print(colored("3. List services", 'cyan'))
     print(colored("4. Save passwords", 'cyan'))
+    print(colored("5. Edit a Password", 'cyan'))
+    print(colored("6. Delete a Password", 'cyan'))
     print(colored("5. Star the GitHub repo", 'light_magenta'))
     print(colored("6. Exit", 'cyan'))
 
 def get_user_choice():
-    return input(colored("Enter your choice (1-6): ", 'yellow'))
+    return input(colored("Enter your choice (1-8): ", 'yellow'))
 
 def display_message(message, color='white'):
     print(colored(message, color))
