@@ -4,6 +4,8 @@ import hashlib
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import secrets
+import string
 
 class PasswordManager:
     def __init__(self):
@@ -39,5 +41,27 @@ class PasswordManager:
             return self.fernet.decrypt(encrypted_password.encode()).decode()
         return None
     
+    def edit_password(self, service, new_password):
+        if service in self.passwords:
+            encrypted_password = self.fernet.encrypt(new_password.encode())
+            self.passwords[service] = encrypted_password.decode();
+            return True
+        return False
+    
+    def delete_password(self, service):
+        if service in self.passwords:
+            del self.passwords[service]
+            return True
+        return False
+    
     def list_services(self):
         return list(self.passwords.keys())
+    
+    def generate_strong_password(self, length=12):
+        if length < 12:
+            raise ValueError("Password length should be at least 12 characters")
+        
+        alphabet = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(secrets.choice(alphabet) for _ in range(length))
+        
+        return password

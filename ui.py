@@ -18,16 +18,17 @@ def display_menu():
     print(colored("2. Get password", 'cyan'))
     print(colored("3. List services", 'cyan'))
     print(colored("4. Save passwords", 'cyan'))
-    print(colored("5. Star the GitHub repo", 'light_magenta'))
-    print(colored("6. Exit", 'cyan'))
+    print(colored("5. Generate Strong Password", 'blue'))
+    print(colored("6. Star the GitHub repo", 'light_magenta'))
+    print(colored("7. Exit", 'cyan'))
 
 def get_user_choice():
-    return input(colored("Enter your choice (1-6): ", 'yellow'))
+    return input(colored("Enter your choice (1-7): ", 'yellow'))
 
 def display_message(message, color='white'):
     print(colored(message, color))
 
-def custom_loading_animation(duration=3):
+def custom_loading_animation(duration=1.5):
     animation = "|/-\\"
     start_time = time.time()
     

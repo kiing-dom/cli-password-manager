@@ -66,10 +66,18 @@ def main():
             display_message("Passwords saved successfully!", 'green')
             
         elif choice == '5':
+            length = int(input(colored("Enter a password length: ", 'yellow')))
+            if length < 12:
+                display_message("Invalid length. Password length should be at least 12")
+            else:
+                password = pm.generate_strong_password(length)
+                display_message(f"Password: {password}")
+            
+        elif choice == '6':
             display_message("Opening GitHub repo in browser...", 'cyan')
             webbrowser.open(GITHUB_REPO_URL)
         
-        elif choice == '6':
+        elif choice == '7':
             display_message("Thank you for staying Auth the Grid. Goodbye!", 'red')
             sys.exit(0)
         
