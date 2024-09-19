@@ -88,12 +88,20 @@ def main():
                         display_message(f"Password for {service} could not be deleted", 'red')
                 else: display_message("Deletion cancelled.", 'yellow')
             else: display_message(f"Service {service} does not exist.", 'red')
-            
+
         elif choice == '7':
+            length = int(input(colored("Enter a password length: ", 'yellow')))
+            if length < 12:
+                display_message("Invalid length. Password length should be at least 12")
+            else:
+                password = pm.generate_strong_password(length)
+                display_message(f"Password: {password}")
+            
+        elif choice == '8':
             display_message("Opening GitHub repo in browser...", 'cyan')
             webbrowser.open(GITHUB_REPO_URL)
         
-        elif choice == '8':
+        elif choice == '9':
             display_message("Thank you for staying Auth the Grid. Goodbye!", 'red')
             sys.exit(0)
         

@@ -4,6 +4,8 @@ import hashlib
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import secrets
+import string
 
 class PasswordManager:
     def __init__(self):
@@ -56,3 +58,13 @@ class PasswordManager:
     
     def list_services(self):
         return list(self.passwords.keys())
+    
+    #generating strong passwords
+    def generate_strong_password(self, length=12):
+        if length < 12:
+            raise ValueError("Password length should be at least 12 characters")
+        
+        alphabet = string.ascii_letters + string.digits + string.punctuation
+        password = ''.join(secrets.choice(alphabet) for _ in range(length))
+
+        return password
