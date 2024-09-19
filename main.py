@@ -45,6 +45,7 @@ def main():
             service = input(colored("Enter the service name: ", 'yellow'))
             password = getpass.getpass(colored("Enter the password: ", 'yellow'))
             pm.add_password(service, password)
+            save_data_to_file(pm, 'passwords.json')
             display_message("Password added successfully!", 'green')
         
         elif choice == '2':
@@ -60,12 +61,8 @@ def main():
             display_message("Services:", 'cyan')
             for service in services:
                 display_message(f"- {service}", 'yellow')
-        
-        elif choice == '4':
-            save_data_to_file(pm, 'passwords.json')
-            display_message("Passwords saved successfully!", 'green')
             
-        elif choice == '5':
+        elif choice == '4':
             service = input(colored("Enter name of service with password to be edited: ", 'yellow'))
             if service in pm.list_services():
                 new_password = getpass.getpass(colored("Enter the new password: ", 'yellow'))
@@ -76,7 +73,7 @@ def main():
             else:
                 display_message(f"Service could not be found", 'red')
                 
-        elif choice == '6':
+        elif choice == '5':
             service = input(colored("Enter name of service to be deleted: ", 'yellow'))
             if service in pm.list_services():
                 confirm = input(colored(f"Are you sure you want to delete the password for {service}? (y/n): ", 'yellow')).lower()
@@ -89,7 +86,7 @@ def main():
                 else: display_message("Deletion cancelled.", 'yellow')
             else: display_message(f"Service {service} does not exist.", 'red')
 
-        elif choice == '7':
+        elif choice == '6':
             length = int(input(colored("Enter a password length: ", 'yellow')))
             if length < 12:
                 display_message("Invalid length. Password length should be at least 12")
@@ -97,11 +94,11 @@ def main():
                 password = pm.generate_strong_password(length)
                 display_message(f"Password: {password}")
             
-        elif choice == '8':
+        elif choice == '7':
             display_message("Opening GitHub repo in browser...", 'cyan')
             webbrowser.open(GITHUB_REPO_URL)
         
-        elif choice == '9':
+        elif choice == '8':
             display_message("Thank you for staying Auth the Grid. Goodbye!", 'red')
             sys.exit(0)
         
