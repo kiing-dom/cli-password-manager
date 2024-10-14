@@ -6,7 +6,7 @@ Auth The Grid is a command-line interface (CLI) password manager that allows you
 
 - **Secure Storage**: Passwords are encrypted using the Fernet symmetric encryption.
 - **Root Password Protection**: Access to the password manager is protected by a root password.
-- **Service Management**: Add, Edit, Delete, Retrieve, and List passwords for different services.
+- **Service Management**: Add, Edit, Delete, Retrieve passwords for different services.
 - **Password Generator**: Can Generate Strong Passwords for the user (minimum 12 characters)
 - **Data Persistence**: Save and load passwords from a JSON file.
 
