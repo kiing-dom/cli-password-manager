@@ -43,6 +43,12 @@ def main():
         
         if choice == '1':
             service = input(colored("Enter the service name: ", 'yellow'))
+            
+            if service in pm.list_services():
+                overwrite_choice = input(colored(f"A password for '{service}' exists already. Do you want to overwrite it? (Y/n): ", 'red'))
+                if overwrite_choice.lower() != 'y':
+                    display_message("Operation cancelled.", 'yellow')
+                    continue
             password = getpass.getpass(colored("Enter the password: ", 'yellow'))
             pm.add_password(service, password)
             save_data_to_file(pm, 'passwords.json')
