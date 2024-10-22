@@ -90,6 +90,14 @@ def handle_delete_password(pm):
     else:
         display_message(f"Service {service} does not exist.", 'red')
 
+def handle_generate_password(pm):
+    """Handle generating a strong password."""
+    length = int(input(colored("Enter a password length: ", 'yellow')))
+    if length < 12:
+        display_message("Invalid length. Password length should be at least 12", 'red')
+    else:
+        password = pm.generate_strong_password(length)
+        display_message(f"Password: {password}", 'green')
 
 def main():
     custom_loading_animation()
