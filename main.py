@@ -65,6 +65,18 @@ def handle_get_password(pm):
     else:
         display_message("Service not found.", 'red')
 
+def handle_edit_password(pm):
+    """Handle the flow for editing a password"""
+    service = input(colored("Enter name of service with password to be edited: ", 'yellow'))
+    if service in pm.list_services():
+        new_password = getpass.getpass(colored("Enter the new password: ", 'yellow'))
+        if pm.edit_password(service, new_password):
+            display_message(f"Password for {service} updated successfully!", 'green')
+        else:
+            display_message("Password could not be updated!", 'red')
+    else:
+        display_message("Service could not be found", 'red')
+
 
 
 def main():
