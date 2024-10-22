@@ -9,6 +9,14 @@ from termcolor import colored
 
 GITHUB_REPO_URL = 'https://github.com/kiing-dom/cli-password-manager'
 
+def load_or_set_password(pm):
+    """Loads or sets the root password based on whether the password file exists"""
+    if os.path.exists('passwords.json'):
+        load_from_file(pm, 'passwords.json')
+        return prompt_root_password(pm)
+    else:
+        return set_new_root_password(pm)
+
 def main():
     custom_loading_animation()
     display_title()
