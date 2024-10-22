@@ -16,6 +16,32 @@ def load_or_set_password(pm):
         return prompt_root_password(pm)
     else:
         return set_new_root_password(pm)
+    
+def prompt_root_password(pm):
+    """Promp user to enter root password until it is correct"""
+    while True:
+        root_password = getpass.getpass(colored("Enter your root password: ", 'yellow'))
+        if pm.verify_root_password(root_password):
+            pm.set_root_password(root_password)
+            display_message("Access granted!", 'green')
+            return True
+        else:
+            display_message("Root password Incorrect. Try again.", 'red')
+
+def set_new_root_password(pm):
+    """Set a new root password and save it to file."""
+    while True:
+        root_password = getpass.getpass(colored("Set a new root password: ", 'yellow'))
+        confirm_password = getpass.getpass(colored("Confirm root password: ", 'yellow'))
+        if root_password == confirm_password:
+            pm.set_root_password(root_password)
+            save_data_to_file(pm, 'passwords.json')
+            display_message("Root password set and saved successfully!", 'green')
+            return True
+        else:
+            display_message("Passwords do not match, Try again.", 'red')
+
+
 
 def main():
     custom_loading_animation()
