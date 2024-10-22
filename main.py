@@ -77,6 +77,18 @@ def handle_edit_password(pm):
     else:
         display_message("Service could not be found", 'red')
 
+def handle_delete_password(pm):
+    """Handle the flow for deleting a password."""
+    service = input(colored("Enter the name of the service to be deleted: ", 'yellow'))
+    if service in pm.list_services():
+        confirm = input(colored(f"Are you sure you want to delete the password for {service}? (Y/n): ", 'yellow')).lower()
+        if confirm == 'y' and pm.delete_password(service):
+            display_message(f"Password for {service} deleted successfully!", 'green')
+            save_data_to_file(pm, PASSWORDS_FILE_PATH)
+        else:
+            display_message(f"Password for {service} could not be deleted", 'red')
+    else:
+        display_message(f"Service {service} does not exist.", 'red')
 
 
 def main():
