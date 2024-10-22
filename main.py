@@ -8,11 +8,12 @@ from ui import display_title, display_menu, get_user_choice, display_message, cu
 from termcolor import colored
 
 GITHUB_REPO_URL = 'https://github.com/kiing-dom/cli-password-manager'
+PASSWORDS_FILE_PATH = 'passwords.json'
 
 def load_or_set_password(pm):
     """Loads or sets the root password based on whether the password file exists"""
-    if os.path.exists('passwords.json'):
-        load_from_file(pm, 'passwords.json')
+    if os.path.exists(PASSWORDS_FILE_PATH):
+        load_from_file(pm, PASSWORDS_FILE_PATH)
         return prompt_root_password(pm)
     else:
         return set_new_root_password(pm)
@@ -35,11 +36,26 @@ def set_new_root_password(pm):
         confirm_password = getpass.getpass(colored("Confirm root password: ", 'yellow'))
         if root_password == confirm_password:
             pm.set_root_password(root_password)
-            save_data_to_file(pm, 'passwords.json')
+            save_data_to_file(pm, PASSWORDS_FILE_PATH)
             display_message("Root password set and saved successfully!", 'green')
             return True
         else:
             display_message("Passwords do not match, Try again.", 'red')
+
+def handle_add_password(pm):
+    """Handle the flow for adding a password."""
+    service = input(colored("Enter the service name: ", 'yellow'))
+    if service in pm.list_service():
+        overwrite_choice = input(colored(f"A password for '{service}' exists already. Overwrite? (Y/n): ", 'red')).lower()
+        if overwrite_choice != 'y':
+            display_message("Operation cancelled.", 'yellow')
+            return
+    
+    password = getpass.getpass(colored("Enter the password: ", 'yellow'))
+    pm.add_password(service, password)
+    save_data_to_file(pm, PASSWORDS_FILE_PATH)
+    display_message("Password added successfully!", 'green')
+
 
 
 
