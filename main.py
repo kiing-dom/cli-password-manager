@@ -56,6 +56,14 @@ def handle_add_password(pm):
     save_data_to_file(pm, PASSWORDS_FILE_PATH)
     display_message("Password added successfully!", 'green')
 
+def handle_get_password(pm):
+    """Handle the flow foor retrieving a password"""
+    service = input(colored("Enter the service name: ", 'yellow'))
+    password = pm.get_password(service)
+    if password:
+        display_message(f"Password for {service}: {password}", 'green')
+    else:
+        display_message("Service not found.", 'red')
 
 
 
