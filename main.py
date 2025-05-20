@@ -45,7 +45,7 @@ def set_new_root_password(pm):
 def handle_add_password(pm):
     """Handle the flow for adding a password."""
     service = input(colored("Enter the service name: ", 'yellow'))
-    if service in pm.list_service():
+    if service in pm.list_services():
         overwrite_choice = input(colored(f"A password for '{service}' exists already. Overwrite? (Y/n): ", 'red')).lower()
         if overwrite_choice != 'y':
             display_message("Operation cancelled.", 'yellow')
